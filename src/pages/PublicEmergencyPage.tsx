@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ShieldAlert, Volume2, PhoneCall, HeartPulse, AlertTriangle, VolumeX } from 'lucide-react';
+import { ShieldAlert, Volume2, PhoneCall, HeartPulse, AlertTriangle, VolumeX, Phone } from 'lucide-react';
 import { useEmergencyProfile } from '../hooks/useEmergencyProfile';
 import { EmergencyCardView } from '../components/emergency/EmergencyCardView';
 import { Button } from '../components/ui/Button';
@@ -63,9 +63,36 @@ export const PublicEmergencyPage: React.FC = () => {
     );
   }
 
+  const phoneToCall = data.emergency_contact_phone || '+91 98765 00000';
+  const cleanPhone = phoneToCall.replace(/\s+/g, '');
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 selection:bg-rose-500 selection:text-white">
       <div className="max-w-3xl mx-auto space-y-6">
+        {/* Prominent Direct Dial Banner for Emergency Contact */}
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950 border-2 border-rose-500 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl animate-pulse">
+          <div className="flex items-center gap-3">
+            <div className="p-3 rounded-full bg-rose-600 text-white shrink-0 shadow-lg">
+              <PhoneCall className="w-6 h-6 animate-bounce" />
+            </div>
+            <div>
+              <span className="text-[10px] uppercase font-black text-rose-300 tracking-wider block">
+                DIRECT EMERGENCY CONTACT DIAL
+              </span>
+              <h2 className="text-lg font-extrabold text-white">
+                Call {data.emergency_contact_name || 'Emergency Contact'} ({phoneToCall})
+              </h2>
+            </div>
+          </div>
+
+          <a
+            href={`tel:${cleanPhone}`}
+            className="w-full sm:w-auto px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-sm shadow-lg shadow-rose-950/80 text-center transition-transform active:scale-95 shrink-0"
+          >
+            📞 CALL NOW ({phoneToCall})
+          </a>
+        </div>
+
         {/* Header Bar */}
         <header className="flex items-center justify-between pb-4 border-b border-rose-900/60">
           <div className="flex items-center gap-2.5">

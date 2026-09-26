@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { QrCode, Download, Copy, Check, Eye, EyeOff, ShieldCheck, Scan } from 'lucide-react';
+import { QrCode, Download, Copy, Check, Eye, EyeOff, ShieldCheck, Scan, PhoneCall, Globe, Contact } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { generateEmergencyQRDataUrl, getPublicEmergencyUrl } from '../../lib/qr';
+import { generateEmergencyQRDataUrl, getPublicEmergencyUrl, QRTargetType } from '../../lib/qr';
 import { useNotification } from '../../context/NotificationContext';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
@@ -12,6 +12,10 @@ export const QRConfigurator: React.FC = () => {
   const { showToast } = useNotification();
 
   const token = profile?.public_emergency_token || 'emg_rahul_sharma_7721';
+  const emergencyPhone = profile?.emergency_contact_phone || '+91 98765 00000';
+  const emergencyName = profile?.emergency_contact_name || 'Ananya Sharma';
+
+  const [qrTarget, setQrTarget] = useState<QRTargetType>('direct_phone');
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copiedLink, setCopiedLink] = useState(false);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -28,9 +32,15 @@ export const QRConfigurator: React.FC = () => {
   );
 
   const renderQR = useCallback(async () => {
-    const url = await generateEmergencyQRDataUrl(token);
+    const url = await generateEmergencyQRDataUrl(
+      token,
+      qrTarget,
+      emergencyPhone,
+      emergencyName,
+      profile?.full_name
+    );
     setQrDataUrl(url);
-  }, [token]);
+  }, [token, qrTarget, emergencyPhone, emergencyName, profile?.full_name]);
 
   useEffect(() => {
     renderQR();
@@ -44,10 +54,10 @@ export const QRConfigurator: React.FC = () => {
   };
 
   const handleCopyLink = () => {
-    const publicUrl = getPublicEmergencyUrl(token);
-    navigator.clipboard.writeText(publicUrl);
+    const linkToCopy = qrTarget === 'direct_phone' ? `tel:${emergencyPhone.replace(/\s+/g, '')}` : getPublicEmergencyUrl(token);
+    navigator.clipboard.writeText(linkToCopy);
     setCopiedLink(true);
-    showToast('Emergency Link Copied', publicUrl, 'info');
+    showToast('Link Copied', linkToCopy, 'info');
     setTimeout(() => setCopiedLink(false), 2500);
   };
 
@@ -55,23 +65,23 @@ export const QRConfigurator: React.FC = () => {
     if (!qrDataUrl) return;
     const a = document.createElement('a');
     a.href = qrDataUrl;
-    a.download = `HEALINK_Emergency_QR_${profile?.full_name?.replace(/\s+/g, '_') || 'Passport'}.png`;
+    a.download = `HEALINK_Emergency_QR_${qrTarget}_${profile?.full_name?.replace(/\s+/g, '_') || 'Passport'}.png`;
     a.click();
-    showToast('QR Code Saved', 'Downloaded PNG image of your emergency QR.', 'success');
+    showToast('QR Code Saved', 'Downloaded PNG image of emergency QR.', 'success');
   };
 
   return (
     <>
-      <Card glass className="border border-teal-500/30">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-800">
+      <Card glass className="border border-teal-500/30 space-y-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-2xl bg-teal-950 border border-teal-800 text-teal-300">
               <QrCode className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-100">Emergency QR & Privacy Bounding</h3>
+              <h3 className="text-lg font-bold text-slate-100">Emergency QR & Action Target Configurator</h3>
               <p className="text-xs text-slate-400">
-                Control exactly what data paramedics see when scanning your physical QR badge.
+                Choose what action happens when a paramedic scans your physical QR badge.
               </p>
             </div>
           </div>
@@ -82,10 +92,72 @@ export const QRConfigurator: React.FC = () => {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        {/* Target Action Mode Selector */}
+        <div className="space-y-2">
+          <label className="text-xs font-bold uppercase tracking-wider text-slate-300 block">
+            QR Scan Action Mode:
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button
+              type="button"
+              onClick={() => setQrTarget('direct_phone')}
+              className={`p-3.5 rounded-xl border text-left transition-all ${
+                qrTarget === 'direct_phone'
+                  ? 'bg-rose-950/60 border-rose-600 text-white shadow-lg ring-1 ring-rose-500'
+                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-2 font-bold text-xs">
+                <PhoneCall className="w-4 h-4 text-rose-400" />
+                <span>Direct Phone Call (tel:)</span>
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1">
+                Scanning opens phone dialer immediately to call {emergencyName} ({emergencyPhone})
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setQrTarget('web_passport')}
+              className={`p-3.5 rounded-xl border text-left transition-all ${
+                qrTarget === 'web_passport'
+                  ? 'bg-teal-950/60 border-teal-500 text-white shadow-lg ring-1 ring-teal-500'
+                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-2 font-bold text-xs">
+                <Globe className="w-4 h-4 text-teal-400" />
+                <span>Web Health Passport</span>
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1">
+                Scanning opens web app showing allergies, active medications, and blood group
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setQrTarget('vcard_contact')}
+              className={`p-3.5 rounded-xl border text-left transition-all ${
+                qrTarget === 'vcard_contact'
+                  ? 'bg-indigo-950/60 border-indigo-500 text-white shadow-lg ring-1 ring-indigo-500'
+                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-2 font-bold text-xs">
+                <Contact className="w-4 h-4 text-indigo-400" />
+                <span>Save Contact (vCard)</span>
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1">
+                Scanning prompts first responder to save Emergency Contact to address book
+              </p>
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center pt-3 border-t border-slate-800">
           {/* Left: QR Canvas Preview */}
           <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-            <div className="p-4 bg-white rounded-2xl shadow-2xl border-4 border-teal-500/40 relative">
+            <div className="p-4 bg-white rounded-2xl shadow-2xl border-4 border-rose-500/40 relative">
               {qrDataUrl ? (
                 <img src={qrDataUrl} alt="Emergency Health QR Code" className="w-48 h-48 rounded-lg" />
               ) : (
@@ -93,15 +165,14 @@ export const QRConfigurator: React.FC = () => {
                   Generating QR...
                 </div>
               )}
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-teal-600 text-white font-bold text-[10px] px-3 py-0.5 rounded-full uppercase tracking-wider shadow-md">
-                SCAN IN EMERGENCY
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-rose-600 text-white font-bold text-[10px] px-3 py-0.5 rounded-full uppercase tracking-wider shadow-md">
+                {qrTarget === 'direct_phone' ? 'SCAN TO CALL CONTACT' : qrTarget === 'vcard_contact' ? 'SCAN TO SAVE CONTACT' : 'SCAN IN EMERGENCY'}
               </div>
             </div>
 
             <div className="text-center space-y-1">
-              <p className="text-xs font-semibold text-slate-300">Public Token ID</p>
-              <p className="text-xs font-mono text-teal-400 bg-teal-950/60 px-3 py-1 rounded-lg border border-teal-800/40">
-                {token}
+              <p className="text-xs font-semibold text-slate-300">
+                {qrTarget === 'direct_phone' ? `Emergency Dial Target: ${emergencyPhone}` : `Public Token ID: ${token}`}
               </p>
             </div>
 
@@ -112,7 +183,7 @@ export const QRConfigurator: React.FC = () => {
               </Button>
               <Button variant="secondary" size="sm" onClick={handleCopyLink} className="flex-1">
                 {copiedLink ? <Check className="w-4 h-4 text-emerald-400 mr-1" /> : <Copy className="w-4 h-4 mr-1" />}
-                <span>{copiedLink ? 'Copied!' : 'Copy Link'}</span>
+                <span>{copiedLink ? 'Copied!' : 'Copy Target'}</span>
               </Button>
             </div>
           </div>
