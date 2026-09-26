@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { HeartPulse, Mail, Lock, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { HeartPulse, Mail, Lock, ArrowRight, ShieldCheck, AlertCircle, UserCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [email, setEmail] = useState('rahul.sharma@healink.demo');
   const [password, setPassword] = useState('demo123456');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/dashboard';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,13 +24,26 @@ export const LoginPage: React.FC = () => {
     try {
       const res = await login(email, password);
       if (res.success) {
-        navigate('/dashboard');
+        navigate(from, { replace: true });
       } else if (res.error) {
         setErrorMsg(res.error);
       }
     } catch {
-      setErrorMsg('Authentication failed. Entering demo mode...');
-      setTimeout(() => navigate('/dashboard'), 1000);
+      setErrorMsg('Authentication error. Entering demo mode...');
+      setTimeout(() => navigate(from, { replace: true }), 1000);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setIsLoading(true);
+    setErrorMsg(null);
+    try {
+      await login('rahul.sharma@healink.demo', 'demo123456');
+      navigate(from, { replace: true });
+    } catch {
+      setErrorMsg('Unable to initialize demo profile.');
     } finally {
       setIsLoading(false);
     }
@@ -41,7 +57,7 @@ export const LoginPage: React.FC = () => {
             <HeartPulse className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-2xl font-extrabold tracking-tight text-white">Sign In to HEALINK</h1>
-          <p className="text-xs text-slate-400">Access your Central Health Passport & Emergency QR</p>
+          <p className="text-xs text-slate-400">Select a health profile or enter your credentials</p>
         </div>
 
         <Card glass className="border border-teal-500/30 p-6 space-y-4">
@@ -87,11 +103,22 @@ export const LoginPage: React.FC = () => {
             </Button>
           </form>
 
-          <div className="pt-3 border-t border-slate-800 text-center">
-            <p className="text-xs text-slate-400">
-              Demo account pre-configured with <strong className="text-teal-300">Rahul Sharma (B+)</strong>.
-            </p>
+          <div className="relative flex py-2 items-center">
+            <div className="flex-grow border-t border-slate-800"></div>
+            <span className="flex-shrink mx-3 text-[10px] text-slate-500 uppercase tracking-widest font-bold">Or Demo Profile</span>
+            <div className="flex-grow border-t border-slate-800"></div>
           </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleDemoLogin}
+            disabled={isLoading}
+            className="w-full py-2.5 border-teal-500/40 text-teal-300 hover:bg-teal-950/40 text-xs font-semibold flex items-center justify-center gap-2"
+          >
+            <UserCheck className="w-4 h-4 text-teal-400" />
+            <span>Login as Rahul Sharma (Demo B+)</span>
+          </Button>
         </Card>
 
         <div className="text-center text-xs text-slate-400">

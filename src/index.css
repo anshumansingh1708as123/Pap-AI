@@ -1,42 +1,83 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-border: #E2E8F0;
+
+  --color-brand-50: #F0FDFA;
+  --color-brand-100: #CCFBF1;
+  --color-brand-200: #99F6E4;
+  --color-brand-500: #14B8A6;
+  --color-brand-600: #0D9488;
+  --color-brand-700: #0F766E;
+  --color-brand-900: #134E4A;
+
+  --color-clinical-navy: #0F172A;
+  --color-clinical-slate: #334155;
+  --color-clinical-muted: #64748B;
+  --color-clinical-subtle: #94A3B8;
+
+  --color-health-normal-bg: #F0FDF4;
+  --color-health-normal-text: #166534;
+  --color-health-normal-border: #BBF7D0;
+
+  --color-health-warning-bg: #FFFBEB;
+  --color-health-warning-text: #B45309;
+  --color-health-warning-border: #FDE68A;
+
+  --color-health-critical-bg: #FEF2F2;
+  --color-health-critical-text: #991B1B;
+  --color-health-critical-border: #FECACA;
+
+  --color-emergency-red: #DC2626;
+  --color-emergency-darkRed: #991B1B;
+  --color-emergency-lightRed: #FEF2F2;
+
+  --shadow-health-card: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+  --shadow-health-card-hover: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+  --shadow-health-modal: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+}
+
 @layer base {
   :root {
-    --bg-main: #f8fafc;
-    --card-bg: #ffffff;
-    --card-border: #e2e8f0;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #64748b;
-    --brand-teal: #0d9488;
-    --brand-teal-light: #ccfbf1;
-    --brand-teal-hover: #0f766e;
-    --mint-bg: #f0fdf4;
-    --amber-bg: #fffbeb;
-    --amber-border: #fef3c7;
-    --amber-text: #92400e;
+    --bg-main: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --card-border: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+    --brand-teal: #0D9488;
+    --brand-teal-light: #CCFBF1;
+    --brand-teal-hover: #0F766E;
+    --mint-bg: #F0FDF4;
+    --amber-bg: #FFFBEB;
+    --amber-border: #FDE68A;
+    --amber-text: #B45309;
   }
 
   .dark {
-    --bg-main: #090d16;
-    --card-bg: #0f172a;
-    --card-border: #1e293b;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    --brand-teal: #14b8a6;
-    --brand-teal-light: #134e4a;
-    --brand-teal-hover: #2dd4bf;
-    --mint-bg: #042f2e;
-    --amber-bg: #451a03;
-    --amber-border: #78350f;
-    --amber-text: #fef3c7;
+    --bg-main: #090D16;
+    --card-bg: #0F172A;
+    --card-border: #1E293B;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --brand-teal: #14B8A6;
+    --brand-teal-light: #134E4A;
+    --brand-teal-hover: #2DD4BF;
+    --mint-bg: #042F2E;
+    --amber-bg: #451A03;
+    --amber-border: #78350F;
+    --amber-text: #FEF3C7;
   }
 
   body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
@@ -49,25 +90,49 @@
 .saas-card {
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 20px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .saas-card:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
   border-color: rgba(13, 148, 136, 0.3);
 }
 
+.glass-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+}
+
+.dark .glass-card {
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border-color: rgba(30, 41, 59, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+}
+
+.glass-panel {
+  background-color: #FFFFFF;
+  border-color: #E2E8F0;
+}
+
+.dark .glass-panel {
+  background-color: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(16px);
+  border-color: rgba(30, 41, 59, 0.9);
+}
+
 .mint-pill-active {
-  background-color: #f0fdf4;
-  color: #0f766e;
+  background-color: #F0FDFA;
+  color: #0D9488;
   font-weight: 600;
 }
 
 .dark .mint-pill-active {
-  background-color: #134e4a;
-  color: #5eead4;
+  background-color: #134E4A;
+  color: #5EEAD4;
 }
 
 .safety-banner {
@@ -87,7 +152,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 

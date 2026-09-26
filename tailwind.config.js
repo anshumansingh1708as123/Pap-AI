@@ -4,38 +4,59 @@ export default {
   theme: {
     extend: {
       colors: {
-        teal: {
-          50: '#f0fdfa',
-          100: '#ccfbf1',
-          200: '#99f6e4',
-          300: '#5eead4',
-          400: '#2dd4bf',
-          500: '#14b8a6',
-          600: '#0d9488',
-          700: '#0f766e',
-          800: '#115e59',
-          900: '#134e4a',
-          950: '#042f2e',
+        background: '#F8FAFC', // Slate-50: Calming, sterile-clean canvas
+        surface: '#FFFFFF',    // Crisp pure white for cards and modals
+        border: '#E2E8F0',     // Slate-200: Subtle structural dividers
+        brand: {
+          50: '#F0FDFA',
+          100: '#CCFBF1',
+          200: '#99F6E4',
+          500: '#14B8A6',
+          600: '#0D9488',     // Primary clinical teal
+          700: '#0F766E',     // Deep interactive teal
+          900: '#134E4A',
         },
-        coral: {
-          50: '#fff1f2',
-          100: '#ffe4e6',
-          500: '#f43f5e',
-          600: '#e11d48',
-          700: '#be123c',
+        clinical: {
+          navy: '#0F172A',    // Slate-900: High-contrast primary headings
+          slate: '#334155',   // Slate-700: Body text
+          muted: '#64748B',   // Slate-500: Captions and secondary metadata
+          subtle: '#94A3B8',  // Slate-400: Icons and empty states
         },
-        navy: {
-          800: '#0f172a',
-          900: '#020617',
-        }
+        health: {
+          normal: {
+            bg: '#F0FDF4',
+            text: '#166534',
+            border: '#BBF7D0',
+          },
+          warning: {
+            bg: '#FFFBEB',
+            text: '#B45309',
+            border: '#FDE68A',
+          },
+          critical: {
+            bg: '#FEF2F2',
+            text: '#991B1B',
+            border: '#FECACA',
+          },
+        },
+        emergency: {
+          red: '#DC2626',
+          darkRed: '#991B1B',
+          lightRed: '#FEF2F2',
+        },
+      },
+      boxShadow: {
+        'health-card': '0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02)',
+        'health-card-hover': '0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.03)',
+        'health-modal': '0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
+      },
+      borderRadius: {
+        '2xl': '1rem',
+        '3xl': '1.5rem',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
       },
-      animation: {
-        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'bounce-slow': 'bounce 2s infinite',
-      }
     },
   },
   plugins: [],

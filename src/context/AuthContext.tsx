@@ -17,42 +17,95 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<{ id: string; email: string } | null>({
-    id: 'a0000000-0000-0000-0000-000000000001',
-    email: 'rahul.sharma@healink.demo',
-  });
-  const [profile, setProfile] = useState<Profile | null>(LocalMockDB.getProfile());
-  const [loading, setLoading] = useState(false);
-  const [isDemoMode, setIsDemoMode] = useState(!isSupabaseConfigured());
+  const [user, setUser] = useState<{ id: string; email: string } | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [isDemoMode, setIsDemoMode] = useState<boolean>(!isSupabaseConfigured());
 
   useEffect(() => {
-    if (isSupabaseConfigured() && supabase) {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session?.user) {
-          setUser({ id: session.user.id, email: session.user.email || '' });
-          setIsDemoMode(false);
-          fetchSupabaseProfile(session.user.id);
-        }
-      });
+    let isMounted = true;
 
-      const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-        if (session?.user) {
-          setUser({ id: session.user.id, email: session.user.email || '' });
-          setIsDemoMode(false);
-          fetchSupabaseProfile(session.user.id);
-        } else {
-          // Fall back to demo user
+    const initAuth = async () => {
+      const isDemoSession = sessionStorage.getItem('healink_demo_session') === 'true';
+
+      if (isSupabaseConfigured() && supabase) {
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.user) {
+            if (isMounted) {
+              setUser({ id: session.user.id, email: session.user.email || '' });
+              setIsDemoMode(false);
+              await fetchSupabaseProfile(session.user.id);
+              setLoading(false);
+            }
+            return;
+          }
+        } catch (err) {
+          console.warn('Error fetching Supabase auth session:', err);
+        }
+      }
+
+      if (isDemoSession) {
+        if (isMounted) {
           setUser({
             id: 'a0000000-0000-0000-0000-000000000001',
             email: 'rahul.sharma@healink.demo',
           });
           setProfile(LocalMockDB.getProfile());
           setIsDemoMode(true);
+          setLoading(false);
         }
+        return;
+      }
+
+      // Default: Unauthenticated
+      if (isMounted) {
+        setUser(null);
+        setProfile(null);
+        setLoading(false);
+      }
+    };
+
+    initAuth();
+
+    if (isSupabaseConfigured() && supabase) {
+      const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_OUT') {
+          sessionStorage.removeItem('healink_demo_session');
+          setUser(null);
+          setProfile(null);
+          setLoading(false);
+          return;
+        }
+
+        if (session?.user) {
+          setUser({ id: session.user.id, email: session.user.email || '' });
+          setIsDemoMode(false);
+          fetchSupabaseProfile(session.user.id);
+        } else {
+          const isDemoSession = sessionStorage.getItem('healink_demo_session') === 'true';
+          if (isDemoSession) {
+            setUser({
+              id: 'a0000000-0000-0000-0000-000000000001',
+              email: 'rahul.sharma@healink.demo',
+            });
+            setProfile(LocalMockDB.getProfile());
+            setIsDemoMode(true);
+          } else {
+            setUser(null);
+            setProfile(null);
+          }
+        }
+        setLoading(false);
       });
 
       return () => {
+        isMounted = false;
         authListener.subscription.unsubscribe();
+      };
+    } else {
+      return () => {
+        isMounted = false;
       };
     }
   }, []);
@@ -69,7 +122,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!error && data) {
         setProfile(data as Profile);
       } else {
-        // Fall back to local mock profile if no DB row found
         setProfile(LocalMockDB.getProfile());
       }
     } catch {
@@ -88,6 +140,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
 
         if (!error && data.user) {
+          sessionStorage.removeItem('healink_demo_session');
           setUser({ id: data.user.id, email: data.user.email || email });
           setIsDemoMode(false);
           await fetchSupabaseProfile(data.user.id);
@@ -102,8 +155,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     // Demo/Fallback authentication logic
-    setUser({ id: 'a0000000-0000-0000-0000-000000000001', email });
+    sessionStorage.setItem('healink_demo_session', 'true');
+    setUser({ id: 'a0000000-0000-0000-0000-000000000001', email: email || 'rahul.sharma@healink.demo' });
     setProfile(LocalMockDB.getProfile());
+    setIsDemoMode(true);
     setLoading(false);
     return { success: true };
   };
@@ -119,6 +174,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
 
         if (!error && data.user) {
+          sessionStorage.removeItem('healink_demo_session');
           setUser({ id: data.user.id, email: data.user.email || email });
           setIsDemoMode(false);
 
@@ -139,16 +195,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
 
+    sessionStorage.setItem('healink_demo_session', 'true');
     const updated = LocalMockDB.updateProfile({ full_name: name });
     setUser({ id: 'a0000000-0000-0000-0000-000000000001', email });
     setProfile(updated);
+    setIsDemoMode(true);
     setLoading(false);
     return { success: true };
   };
 
   const logout = async () => {
+    sessionStorage.removeItem('healink_demo_session');
     if (isSupabaseConfigured() && supabase) {
-      await supabase.auth.signOut();
+      try {
+        await supabase.auth.signOut();
+      } catch (err) {
+        console.warn('Supabase signOut error:', err);
+      }
     }
     setUser(null);
     setProfile(null);
