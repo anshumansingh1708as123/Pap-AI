@@ -10,12 +10,13 @@ export const SignupPage: React.FC = () => {
   const { signup } = useAuth();
   const [name, setName] = useState('Rahul Sharma');
   const [email, setEmail] = useState('rahul.sharma@healink.demo');
+  const [password, setPassword] = useState('demo123456');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await signup(email, name);
+    await signup(email, name, password);
     setIsLoading(false);
     navigate('/onboarding');
   };
@@ -67,14 +68,15 @@ export const SignupPage: React.FC = () => {
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="password"
-                  defaultValue="demo123456"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-teal-500"
                   required
                 />
               </div>
             </div>
 
-            <Button type="submit" variant="primary" className="w-full" isLoading={isLoading}>
+            <Button type="submit" variant="primary" className="w-full py-3 text-xs sm:text-sm font-bold" isLoading={isLoading}>
               <span>Start Setup Wizard</span>
               <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
