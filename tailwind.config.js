@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#F8FAFC', // Slate-50: Calming, sterile-clean canvas
-        surface: '#FFFFFF',    // Crisp pure white for cards and modals
-        border: '#E2E8F0',     // Slate-200: Subtle structural dividers
+        background: '#FAF6F0', // Soft warm light beige canvas
+        surface: '#FFFFFF',    // Crisp warm white for cards and modals
+        border: '#E8E2D9',     // Warm stone dividers
         brand: {
           50: '#F0FDFA',
           100: '#CCFBF1',

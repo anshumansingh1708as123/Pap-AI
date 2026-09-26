@@ -10,7 +10,7 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode; showAIBanner
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen flex flex-col bg-[#FAF6F0] dark:bg-slate-950 text-stone-900 dark:text-slate-100 transition-colors duration-200">
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <SafetyGuardrailBar />
       

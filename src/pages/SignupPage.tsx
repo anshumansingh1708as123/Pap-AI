@@ -22,7 +22,7 @@ export const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex items-center justify-center p-4 transition-colors duration-200">
+    <div className="min-h-screen bg-[#FAF6F0] dark:bg-slate-950 text-stone-900 dark:text-slate-100 flex items-center justify-center p-4 transition-colors duration-200">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <div className="w-12 h-12 rounded-2xl bg-teal-600 dark:bg-teal-500 flex items-center justify-center shadow-md text-white mx-auto">

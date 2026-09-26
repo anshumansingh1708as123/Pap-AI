@@ -67,7 +67,7 @@ export const PublicEmergencyPage: React.FC = () => {
   const cleanPhone = phoneToCall.replace(/\s+/g, '');
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-4 sm:p-6 transition-colors duration-200 selection:bg-rose-500 selection:text-white">
+    <div className="min-h-screen bg-[#FAF6F0] dark:bg-slate-950 text-stone-900 dark:text-slate-100 p-4 sm:p-6 transition-colors duration-200 selection:bg-rose-500 selection:text-white">
       <div className="max-w-3xl mx-auto space-y-6">
         {/* Prominent Direct Dial Banner for Emergency Contact */}
         <div className="p-4 rounded-2xl bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950 border-2 border-rose-500 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl animate-pulse">
