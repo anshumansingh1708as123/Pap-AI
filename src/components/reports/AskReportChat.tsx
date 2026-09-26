@@ -66,15 +66,15 @@ export const AskReportChat: React.FC<{ reportContext: string }> = ({ reportConte
   };
 
   return (
-    <Card glass className="border border-teal-500/30 flex flex-col h-[500px]">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+    <Card glass={false} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md flex flex-col h-[500px]">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-2">
-          <div className="p-2 rounded-xl bg-teal-950 border border-teal-800 text-teal-300">
+          <div className="p-2 rounded-xl bg-teal-50 dark:bg-teal-950 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300">
             <Bot className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-100">Ask My Medical Report (AI Chat)</h3>
-            <p className="text-[11px] text-slate-400">Contextual Q&A on your lab values & prescriptions</p>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Ask Medical Report Assistant</h3>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">Contextual Q&A on your lab values & prescriptions</p>
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@ export const AskReportChat: React.FC<{ reportContext: string }> = ({ reportConte
               className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
                 msg.sender === 'user'
                   ? 'bg-teal-600 text-white'
-                  : 'bg-slate-800 text-teal-400 border border-slate-700'
+                  : 'bg-slate-100 dark:bg-slate-800 text-teal-700 dark:text-teal-400 border border-slate-200 dark:border-slate-700'
               }`}
             >
               {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
@@ -104,7 +104,7 @@ export const AskReportChat: React.FC<{ reportContext: string }> = ({ reportConte
               className={`p-3 rounded-2xl text-xs leading-relaxed ${
                 msg.sender === 'user'
                   ? 'bg-teal-600 text-white rounded-tr-none'
-                  : 'bg-slate-900 border border-slate-800 text-slate-200 rounded-tl-none'
+                  : 'bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-200 rounded-tl-none'
               }`}
             >
               <p>{msg.text}</p>
@@ -113,22 +113,22 @@ export const AskReportChat: React.FC<{ reportContext: string }> = ({ reportConte
           </div>
         ))}
         {loading && (
-          <div className="flex items-center gap-2 text-xs text-teal-400 italic p-2">
+          <div className="flex items-center gap-2 text-xs text-teal-600 dark:text-teal-400 italic p-2">
             <Sparkles className="w-4 h-4 animate-spin" />
-            <span>Gemini AI is analyzing report context...</span>
+            <span>Clinical assistant analyzing report context...</span>
           </div>
         )}
       </div>
 
       {/* Input Box */}
-      <div className="pt-3 border-t border-slate-800 flex items-center gap-2">
+      <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Ask e.g., 'What does HbA1c 6.4% mean for my Metformin dose?'"
-          className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-teal-500"
+          className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-teal-600"
         />
         <Button variant="primary" size="sm" onClick={handleSend} isLoading={loading}>
           <Send className="w-4 h-4" />

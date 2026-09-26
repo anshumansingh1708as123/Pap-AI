@@ -22,55 +22,55 @@ export const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex items-center justify-center p-4 transition-colors duration-200">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-600 to-teal-400 flex items-center justify-center shadow-lg shadow-teal-900/40 mx-auto">
-            <HeartPulse className="w-7 h-7 text-white" />
+          <div className="w-12 h-12 rounded-2xl bg-teal-600 dark:bg-teal-500 flex items-center justify-center shadow-md text-white mx-auto">
+            <HeartPulse className="w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white">Create Health Passport</h1>
-          <p className="text-xs text-slate-400">Set up your universal profile & emergency QR</p>
+          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Create Health Passport</h1>
+          <p className="text-xs text-slate-600 dark:text-slate-400">Set up your profile & emergency QR</p>
         </div>
 
-        <Card glass className="border border-teal-500/30 p-6 space-y-4">
+        <Card glass={false} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl p-6 space-y-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Full Legal Name</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Full Legal Name</label>
               <div className="relative">
                 <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-teal-500"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Email Address</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Email Address</label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-teal-500"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Password</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Password</label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-teal-500"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                   required
                 />
               </div>
@@ -83,9 +83,9 @@ export const SignupPage: React.FC = () => {
           </form>
         </Card>
 
-        <div className="text-center text-xs text-slate-400">
+        <div className="text-center text-xs text-slate-600 dark:text-slate-400">
           Already have an account?{' '}
-          <Link to="/login" className="text-teal-400 hover:underline font-semibold">
+          <Link to="/login" className="text-teal-600 dark:text-teal-400 hover:underline font-semibold">
             Sign In
           </Link>
         </div>

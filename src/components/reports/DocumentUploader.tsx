@@ -73,23 +73,23 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({ onExtracted 
   };
 
   return (
-    <Card glass className="border border-teal-500/30">
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+    <Card glass={false} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+      <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-2xl bg-teal-950 border border-teal-800 text-teal-300">
-            <Sparkles className="w-6 h-6 animate-pulse" />
+          <div className="p-3 rounded-2xl bg-teal-50 dark:bg-teal-950 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300">
+            <Sparkles className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-100">AI Medical Document Extractor</h3>
-            <p className="text-xs text-slate-400">
-              Upload prescriptions, blood tests, or discharge summaries for auto-parsing into your Health Passport.
+            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Medical Document Analyzer</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              Upload prescriptions, blood tests, or discharge summaries for clinical analysis into your Health Passport.
             </p>
           </div>
         </div>
 
         <Button variant="outline" size="sm" onClick={handleLoadSample} disabled={isProcessing}>
-          <FileText className="w-4 h-4 mr-1 text-teal-400" />
-          <span>Load Demo Report</span>
+          <FileText className="w-4 h-4 mr-1 text-teal-600 dark:text-teal-400" />
+          <span>Load Sample Report</span>
         </Button>
       </div>
 
@@ -116,18 +116,18 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({ onExtracted 
         }}
         className={`p-8 rounded-2xl border-2 border-dashed text-center transition-all duration-300 ${
           dragActive
-            ? 'border-teal-400 bg-teal-950/40'
-            : 'border-slate-700 hover:border-teal-500/50 bg-slate-900/60'
+            ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/40'
+            : 'border-slate-200 dark:border-slate-700 hover:border-teal-500/50 bg-slate-50 dark:bg-slate-950/60'
         }`}
       >
-        <Upload className="w-10 h-10 text-teal-400 mx-auto mb-3 animate-bounce-slow" />
-        <h4 className="text-sm font-bold text-slate-200">Drag & Drop Medical Report File Here</h4>
-        <p className="text-xs text-slate-400 mt-1">Supports PDF, TXT, or scanned report text</p>
+        <Upload className="w-10 h-10 text-teal-600 dark:text-teal-400 mx-auto mb-3" />
+        <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">Drag & Drop Medical Report File Here</h4>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Supports PDF, TXT, or scanned report text</p>
 
         <div className="mt-4 flex items-center justify-center gap-3">
           <label className="cursor-pointer">
             <input type="file" className="hidden" onChange={handleFileUpload} accept=".txt,.pdf,.csv" />
-            <span className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-teal-300 text-xs font-semibold border border-teal-500/30 inline-block transition-colors">
+            <span className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-teal-800 dark:text-teal-300 text-xs font-semibold border border-teal-200 dark:border-teal-500/30 inline-block transition-colors">
               Browse Local File
             </span>
           </label>
@@ -136,15 +136,15 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({ onExtracted 
 
       {/* Textarea Paste Fallback */}
       <div className="mt-4 space-y-2">
-        <label className="text-xs font-semibold text-slate-300 flex items-center justify-between">
+        <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-between">
           <span>Or Paste Medical Text Below:</span>
-          <span className="text-[10px] text-slate-500">Gemini 1.5 Flash Parser</span>
+          <span className="text-[10px] text-slate-500">Clinical Parser Engine</span>
         </label>
         <textarea
           value={pastedText}
           onChange={(e) => setPastedText(e.target.value)}
           placeholder="Paste lab report contents, prescription notes, or clinical summary text..."
-          className="w-full h-32 p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-teal-500 font-mono resize-none"
+          className="w-full h-32 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-teal-600 font-mono resize-none"
         />
       </div>
 

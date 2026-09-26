@@ -59,10 +59,10 @@ export const MedicationManagerPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <Pill className="w-5 h-5 text-indigo-400" />
-              <h1 className="text-2xl font-extrabold text-slate-100">Medication Manager & Adherence Checklist</h1>
+              <Pill className="w-5 h-5 text-teal-600 dark:text-indigo-400" />
+              <h1 className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">Medication Manager & Adherence Checklist</h1>
             </div>
-            <p className="text-xs text-slate-400">Track daily doses and active prescription schedules</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Track daily doses and active prescription schedules</p>
           </div>
 
           <Button variant="primary" size="sm" onClick={() => setIsModalOpen(true)}>
@@ -72,21 +72,21 @@ export const MedicationManagerPage: React.FC = () => {
         </div>
 
         {/* Medical Safety Invariant Banner */}
-        <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center gap-2.5 shadow-sm">
-          <Info className="w-4 h-4 text-sky-400 shrink-0" />
+        <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 flex items-center gap-2.5 shadow-sm">
+          <Info className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
           <span>
-            <strong className="text-sky-300 font-semibold">Interaction Safety Notice:</strong> Medication interaction checking is not configured yet. Always verify potential drug-drug interactions directly with your prescribing physician or pharmacist.
+            <strong className="text-sky-900 dark:text-sky-300 font-semibold">Interaction Safety Notice:</strong> Medication interaction checking is not configured yet. Always verify potential drug-drug interactions directly with your prescribing physician or pharmacist.
           </span>
         </div>
 
         {/* Today's Dosage Checklist */}
-        <Card glass className="border border-indigo-950 space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-indigo-400" />
+        <Card glass={false} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-950 space-y-4 shadow-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-teal-600 dark:text-indigo-400" />
               <span>Today's Daily Dose Checklist</span>
             </h3>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               {Object.values(takenDoses).filter(Boolean).length} / {medications.filter((m) => m.active).length} Doses Logged
             </span>
           </div>
@@ -102,20 +102,20 @@ export const MedicationManagerPage: React.FC = () => {
                     onClick={() => handleToggleDose(med.id)}
                     className={`p-4 rounded-xl border cursor-pointer transition-all duration-200 flex items-center justify-between ${
                       isTaken
-                        ? 'bg-emerald-950/30 border-emerald-800/60 text-slate-200'
-                        : 'bg-slate-900 border-slate-800 text-slate-300 hover:border-indigo-500/40'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800/60 text-emerald-950 dark:text-slate-200'
+                        : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 hover:border-teal-500/40 dark:hover:border-indigo-500/40'
                     }`}
                   >
                     <div>
                       <h4 className="text-sm font-bold">{med.name}</h4>
-                      <p className="text-xs text-slate-400 mt-0.5">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         {med.dosage} • {med.frequency}
                       </p>
                     </div>
 
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
-                        isTaken ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-500'
+                        isTaken ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500'
                       }`}
                     >
                       <CheckCircle2 className="w-5 h-5" />
@@ -128,42 +128,42 @@ export const MedicationManagerPage: React.FC = () => {
 
         {/* Active Prescriptions Table */}
         <div className="space-y-3">
-          <h3 className="text-base font-bold text-slate-100">All Prescriptions ({medications.length})</h3>
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">All Prescriptions ({medications.length})</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {medications.map((med) => (
-              <Card key={med.id} glass className="border border-slate-800/80 space-y-3">
+              <Card key={med.id} glass={false} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm">
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="text-base font-bold text-slate-100">{med.name}</h4>
+                      <h4 className="text-base font-bold text-slate-900 dark:text-slate-100">{med.name}</h4>
                       <Badge variant={med.active ? 'active' : 'neutral'}>
                         {med.active ? 'Active' : 'Paused'}
                       </Badge>
                     </div>
-                    <p className="text-xs text-indigo-300 font-semibold mt-1">Dosage: {med.dosage}</p>
+                    <p className="text-xs text-teal-700 dark:text-indigo-300 font-semibold mt-1">Dosage: {med.dosage}</p>
                   </div>
 
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => toggleActive(med.id)}
-                      className="text-xs text-slate-400 hover:text-white px-2 py-1 rounded bg-slate-800"
+                      className="text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
                     >
                       {med.active ? 'Pause' : 'Resume'}
                     </button>
                     <button
                       onClick={() => deleteMedication(med.id)}
-                      className="text-slate-500 hover:text-rose-400 p-1.5 rounded hover:bg-rose-950/30"
+                      className="text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 p-1.5 rounded hover:bg-rose-50 dark:hover:bg-rose-950/30"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
 
-                <div className="text-xs text-slate-400 space-y-1 pt-2 border-t border-slate-800">
-                  <p><strong className="text-slate-300">Frequency:</strong> {med.frequency}</p>
-                  <p><strong className="text-slate-300">Doctor:</strong> {med.prescribing_doctor}</p>
-                  {med.instructions && <p className="italic text-slate-400">"{med.instructions}"</p>}
+                <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1 pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <p><strong className="text-slate-800 dark:text-slate-300">Frequency:</strong> {med.frequency}</p>
+                  <p><strong className="text-slate-800 dark:text-slate-300">Doctor:</strong> {med.prescribing_doctor}</p>
+                  {med.instructions && <p className="italic text-slate-500 dark:text-slate-400">"{med.instructions}"</p>}
                 </div>
               </Card>
             ))}
@@ -174,34 +174,34 @@ export const MedicationManagerPage: React.FC = () => {
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Medication">
           <form onSubmit={handleAddSubmit} className="space-y-4">
             <div>
-              <label className="text-xs text-slate-400 block mb-1">Medication Trade / Generic Name</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Medication Trade / Generic Name</label>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g., Metformin HCl, Telmisartan"
-                className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                 required
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Dose Strength</label>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Dose Strength</label>
                 <input
                   type="text"
                   value={form.dosage}
                   onChange={(e) => setForm({ ...form, dosage: e.target.value })}
                   placeholder="e.g. 500 mg, 40 mg"
-                  className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                  className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                   required
                 />
               </div>
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Frequency</label>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Frequency</label>
                 <select
                   value={form.frequency}
                   onChange={(e) => setForm({ ...form, frequency: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                  className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                 >
                   <option value="Once daily (Morning)">Once daily (Morning)</option>
                   <option value="Twice daily (BD)">Twice daily (Breakfast & Dinner)</option>
@@ -211,22 +211,22 @@ export const MedicationManagerPage: React.FC = () => {
               </div>
             </div>
             <div>
-              <label className="text-xs text-slate-400 block mb-1">Prescribing Physician</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Prescribing Physician</label>
               <input
                 type="text"
                 value={form.prescribing_doctor}
                 onChange={(e) => setForm({ ...form, prescribing_doctor: e.target.value })}
-                className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
               />
             </div>
             <div>
-              <label className="text-xs text-slate-400 block mb-1">Instructions</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Instructions</label>
               <input
                 type="text"
                 value={form.instructions}
                 onChange={(e) => setForm({ ...form, instructions: e.target.value })}
                 placeholder="Take immediately after meals..."
-                className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
               />
             </div>
             <Button type="submit" variant="primary" className="w-full">

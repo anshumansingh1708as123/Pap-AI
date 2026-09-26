@@ -38,11 +38,11 @@ export const PublicEmergencyPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex items-center justify-center p-4">
         <div className="text-center space-y-3">
           <ShieldAlert className="w-12 h-12 text-rose-500 animate-pulse mx-auto" />
-          <h2 className="text-xl font-bold">Decrypting Emergency Token...</h2>
-          <p className="text-xs text-slate-400">Loading permission-bounded health slice</p>
+          <h2 className="text-xl font-bold">Verifying Emergency Token...</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400">Loading permission-bounded health profile</p>
         </div>
       </div>
     );
@@ -50,11 +50,11 @@ export const PublicEmergencyPage: React.FC = () => {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
-        <div className="text-center space-y-4 max-w-md glass-panel p-8 rounded-2xl border border-rose-800">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex items-center justify-center p-4">
+        <div className="text-center space-y-4 max-w-md bg-white dark:bg-slate-900 p-8 rounded-2xl border border-rose-300 dark:border-rose-800 shadow-xl">
           <AlertTriangle className="w-12 h-12 text-rose-500 mx-auto" />
-          <h2 className="text-xl font-bold">Invalid or Expired Emergency Link</h2>
-          <p className="text-xs text-slate-400">The public token could not be verified.</p>
+          <h2 className="text-xl font-bold">Invalid Emergency Link</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400">The public token could not be verified.</p>
           <Link to="/">
             <Button variant="primary" size="sm">Go to HEALINK Home</Button>
           </Link>
@@ -67,7 +67,7 @@ export const PublicEmergencyPage: React.FC = () => {
   const cleanPhone = phoneToCall.replace(/\s+/g, '');
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 selection:bg-rose-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-4 sm:p-6 transition-colors duration-200 selection:bg-rose-500 selection:text-white">
       <div className="max-w-3xl mx-auto space-y-6">
         {/* Prominent Direct Dial Banner for Emergency Contact */}
         <div className="p-4 rounded-2xl bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950 border-2 border-rose-500 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl animate-pulse">

@@ -50,48 +50,48 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex items-center justify-center p-4 transition-colors duration-200">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-600 to-teal-400 flex items-center justify-center shadow-lg shadow-teal-900/40 mx-auto">
-            <HeartPulse className="w-7 h-7 text-white" />
+          <div className="w-12 h-12 rounded-2xl bg-teal-600 dark:bg-teal-500 flex items-center justify-center shadow-md text-white mx-auto">
+            <HeartPulse className="w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white">Sign In to HEALINK</h1>
-          <p className="text-xs text-slate-400">Select a health profile or enter your credentials</p>
+          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Sign In to HEALINK</h1>
+          <p className="text-xs text-slate-600 dark:text-slate-400">Select a health profile or enter your credentials</p>
         </div>
 
-        <Card glass className="border border-teal-500/30 p-6 space-y-4">
+        <Card glass={false} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl p-6 space-y-4">
           {errorMsg && (
-            <div className="p-3 rounded-xl bg-rose-950/60 border border-rose-800/60 text-xs text-rose-300 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800/60 text-xs text-rose-800 dark:text-rose-300 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
               <span>{errorMsg}</span>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Email Address</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Email Address</label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-teal-500"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Password</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Password</label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-teal-500"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                   required
                 />
               </div>
@@ -104,9 +104,9 @@ export const LoginPage: React.FC = () => {
           </form>
 
           <div className="relative flex py-2 items-center">
-            <div className="flex-grow border-t border-slate-800"></div>
-            <span className="flex-shrink mx-3 text-[10px] text-slate-500 uppercase tracking-widest font-bold">Or Demo Profile</span>
-            <div className="flex-grow border-t border-slate-800"></div>
+            <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+            <span className="flex-shrink mx-3 text-[10px] text-slate-400 uppercase tracking-widest font-bold">Or Demo Profile</span>
+            <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
           </div>
 
           <Button
@@ -114,16 +114,16 @@ export const LoginPage: React.FC = () => {
             variant="outline"
             onClick={handleDemoLogin}
             disabled={isLoading}
-            className="w-full py-2.5 border-teal-500/40 text-teal-300 hover:bg-teal-950/40 text-xs font-semibold flex items-center justify-center gap-2"
+            className="w-full py-2.5 text-xs font-semibold flex items-center justify-center gap-2"
           >
-            <UserCheck className="w-4 h-4 text-teal-400" />
+            <UserCheck className="w-4 h-4 text-teal-600 dark:text-teal-400" />
             <span>Login as Rahul Sharma (Demo B+)</span>
           </Button>
         </Card>
 
-        <div className="text-center text-xs text-slate-400">
+        <div className="text-center text-xs text-slate-600 dark:text-slate-400">
           Don't have a Health Passport yet?{' '}
-          <Link to="/signup" className="text-teal-400 hover:underline font-semibold">
+          <Link to="/signup" className="text-teal-600 dark:text-teal-400 hover:underline font-semibold">
             Create Account
           </Link>
         </div>

@@ -16,15 +16,15 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl shadow-sm';
+  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl shadow-xs';
 
   const variants = {
-    primary: 'bg-teal-600 hover:bg-teal-500 text-white focus:ring-teal-500 shadow-teal-900/30',
-    secondary: 'bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 focus:ring-slate-500',
-    danger: 'bg-rose-600 hover:bg-rose-500 text-white focus:ring-rose-500 shadow-rose-900/30',
-    emergency: 'bg-red-600 hover:bg-red-500 text-white font-bold focus:ring-red-500 animate-pulse shadow-red-900/50',
-    ghost: 'bg-transparent hover:bg-slate-800/60 text-slate-300 hover:text-white focus:ring-slate-500',
-    outline: 'bg-transparent hover:bg-teal-950/40 text-teal-400 border border-teal-500/40 hover:border-teal-400 focus:ring-teal-500',
+    primary: 'bg-teal-600 hover:bg-teal-700 text-white focus:ring-teal-500 shadow-sm',
+    secondary: 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 focus:ring-slate-400',
+    danger: 'bg-rose-600 hover:bg-rose-700 text-white focus:ring-rose-500 shadow-sm',
+    emergency: 'bg-red-600 hover:bg-red-700 text-white font-bold focus:ring-red-500 shadow-md',
+    ghost: 'bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:ring-slate-400',
+    outline: 'bg-white dark:bg-slate-900 hover:bg-teal-50 dark:hover:bg-teal-950/40 text-teal-700 dark:text-teal-300 border border-teal-600/40 dark:border-teal-500/40 focus:ring-teal-500',
   };
 
   const sizes = {

@@ -38,10 +38,10 @@ export const VaccinationTrackerPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <Syringe className="w-5 h-5 text-teal-400" />
-              <h1 className="text-2xl font-extrabold text-slate-100">Vaccination & Immunization Passport</h1>
+              <Syringe className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+              <h1 className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">Vaccination & Immunization Passport</h1>
             </div>
-            <p className="text-xs text-slate-400">Record completed vaccines and upcoming booster dues</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Record completed vaccines and upcoming booster dues</p>
           </div>
 
           <Button variant="primary" size="sm" onClick={() => setIsModalOpen(true)}>
@@ -53,15 +53,15 @@ export const VaccinationTrackerPage: React.FC = () => {
         {/* Vaccines Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {vaccines.map((v) => (
-            <Card key={v.id} glass className="border border-slate-800/80 space-y-3">
+            <Card key={v.id} glass={false} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="p-2.5 rounded-xl bg-teal-950 border border-teal-800 text-teal-300">
+                  <div className="p-2.5 rounded-xl bg-teal-50 dark:bg-teal-950 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300">
                     <Syringe className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-slate-100">{v.vaccine_name}</h3>
-                    <p className="text-xs text-slate-400">Dose {v.dose_number}</p>
+                    <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">{v.vaccine_name}</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Dose {v.dose_number}</p>
                   </div>
                 </div>
 
@@ -70,10 +70,10 @@ export const VaccinationTrackerPage: React.FC = () => {
                 </Badge>
               </div>
 
-              <div className="text-xs text-slate-300 space-y-1 pt-2 border-t border-slate-800">
-                {v.date_administered && <p><strong className="text-slate-400">Administered:</strong> {v.date_administered}</p>}
-                {v.next_due_date && <p><strong className="text-rose-400">Next Booster Due:</strong> {v.next_due_date}</p>}
-                {v.administered_by && <p><strong className="text-slate-400">Facility:</strong> {v.administered_by}</p>}
+              <div className="text-xs text-slate-600 dark:text-slate-300 space-y-1 pt-2 border-t border-slate-100 dark:border-slate-800">
+                {v.date_administered && <p><strong className="text-slate-500 dark:text-slate-400">Administered:</strong> {v.date_administered}</p>}
+                {v.next_due_date && <p><strong className="text-rose-600 dark:text-rose-400">Next Booster Due:</strong> {v.next_due_date}</p>}
+                {v.administered_by && <p><strong className="text-slate-500 dark:text-slate-400">Facility:</strong> {v.administered_by}</p>}
               </div>
             </Card>
           ))}
@@ -83,43 +83,43 @@ export const VaccinationTrackerPage: React.FC = () => {
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add Immunization Record">
           <form onSubmit={handleAddVaccine} className="space-y-4">
             <div>
-              <label className="text-xs text-slate-400 block mb-1">Vaccine Name</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Vaccine Name</label>
               <input
                 type="text"
                 value={form.vaccine_name}
                 onChange={(e) => setForm({ ...form, vaccine_name: e.target.value })}
                 placeholder="e.g. COVID-19 Booster, Influenza"
-                className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                 required
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Dose Number</label>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Dose Number</label>
                 <input
                   type="number"
                   value={form.dose_number}
                   onChange={(e) => setForm({ ...form, dose_number: parseInt(e.target.value) || 1 })}
-                  className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                  className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                 />
               </div>
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Date Administered</label>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Date Administered</label>
                 <input
                   type="date"
                   value={form.date_administered}
                   onChange={(e) => setForm({ ...form, date_administered: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                  className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
                 />
               </div>
             </div>
             <div>
-              <label className="text-xs text-slate-400 block mb-1">Administering Facility / Hospital</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Administering Facility / Hospital</label>
               <input
                 type="text"
                 value={form.administered_by}
                 onChange={(e) => setForm({ ...form, administered_by: e.target.value })}
-                className="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-100"
+                className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-teal-600 dark:focus:border-teal-500"
               />
             </div>
             <Button type="submit" variant="primary" className="w-full">

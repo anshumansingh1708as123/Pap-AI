@@ -59,14 +59,14 @@ export const ExtractedReportReview: React.FC<ExtractedReportReviewProps> = ({
   };
 
   return (
-    <Card glass className="border border-teal-500/40 space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+    <Card glass={false} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md space-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-800">
         <div>
           <div className="flex items-center gap-2">
             <Badge variant="teal">{extracted.category}</Badge>
-            <span className="text-xs text-slate-400">Extracted AI Analysis</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">Clinical Report Analysis</span>
           </div>
-          <h2 className="text-xl font-extrabold text-slate-100 mt-1">{extracted.title}</h2>
+          <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 mt-1">{extracted.title}</h2>
         </div>
 
         <Button
@@ -76,7 +76,7 @@ export const ExtractedReportReview: React.FC<ExtractedReportReviewProps> = ({
         >
           {isSaved ? (
             <>
-              <CheckCircle className="w-4 h-4 text-emerald-400 mr-1.5" />
+              <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mr-1.5" />
               <span>Saved to Health Passport</span>
             </>
           ) : (
@@ -89,29 +89,29 @@ export const ExtractedReportReview: React.FC<ExtractedReportReviewProps> = ({
       </div>
 
       {/* Patient Friendly Summary */}
-      <div className="p-4 rounded-xl bg-teal-950/30 border border-teal-800/40 space-y-1">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-teal-300">Plain Language Executive Summary</h4>
-        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">{extracted.summary}</p>
+      <div className="p-4 rounded-xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/40 space-y-1">
+        <h4 className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">Plain Language Executive Summary</h4>
+        <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed">{extracted.summary}</p>
       </div>
 
       {/* Abnormal Biomarkers */}
       {extracted.abnormal_biomarkers.length > 0 && (
         <div className="space-y-3">
-          <div className="flex items-center gap-2 text-rose-400 font-bold text-sm">
+          <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold text-sm">
             <AlertTriangle className="w-4 h-4" />
             <span>Flagged / Abnormal Biomarkers ({extracted.abnormal_biomarkers.length})</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {extracted.abnormal_biomarkers.map((bm, idx) => (
-              <div key={idx} className="p-3.5 rounded-xl bg-rose-950/30 border border-rose-800/50 space-y-1">
+              <div key={idx} className="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-rose-200">{bm.name}</span>
+                  <span className="text-xs font-bold text-rose-900 dark:text-rose-200">{bm.name}</span>
                   <Badge variant={bm.status === 'Critical' ? 'severe' : 'moderate'}>{bm.status}</Badge>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-lg font-black text-white">{bm.value}</span>
-                  <span className="text-[10px] text-slate-400">Ref: {bm.range}</span>
+                  <span className="text-lg font-black text-slate-900 dark:text-white">{bm.value}</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Ref: {bm.range}</span>
                 </div>
               </div>
             ))}
@@ -121,11 +121,11 @@ export const ExtractedReportReview: React.FC<ExtractedReportReviewProps> = ({
 
       {/* Key Findings */}
       <div className="space-y-2">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">Key Clinical Findings</h4>
-        <ul className="space-y-1.5 text-xs text-slate-300">
+        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Key Clinical Findings</h4>
+        <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
           {extracted.key_findings.map((finding, idx) => (
-            <li key={idx} className="flex items-start gap-2 p-2 rounded-lg bg-slate-900/60 border border-slate-800">
-              <CheckCircle className="w-3.5 h-3.5 text-teal-400 shrink-0 mt-0.5" />
+            <li key={idx} className="flex items-start gap-2 p-2 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+              <CheckCircle className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0 mt-0.5" />
               <span>{finding}</span>
             </li>
           ))}
@@ -134,14 +134,14 @@ export const ExtractedReportReview: React.FC<ExtractedReportReviewProps> = ({
 
       {/* Suggested Questions for Doctor */}
       {extracted.suggested_questions.length > 0 && (
-        <div className="space-y-2 pt-2 border-t border-slate-800">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
+        <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
             <HelpCircle className="w-4 h-4" />
             <span>Suggested Questions for Your Next Doctor Visit</span>
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {extracted.suggested_questions.map((q, idx) => (
-              <div key={idx} className="p-2.5 rounded-xl bg-indigo-950/30 border border-indigo-800/40 text-xs text-indigo-200">
+              <div key={idx} className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/40 text-xs text-indigo-900 dark:text-indigo-200">
                 "{q}"
               </div>
             ))}

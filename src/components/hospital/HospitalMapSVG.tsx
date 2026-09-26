@@ -22,9 +22,9 @@ export const HospitalMapSVG: React.FC<HospitalMapSVGProps> = ({
   ];
 
   return (
-    <div className="w-full bg-slate-900/90 rounded-2xl p-4 border border-slate-800 shadow-2xl relative overflow-hidden">
-      <div className="flex items-center justify-between mb-3 text-xs text-slate-400 border-b border-slate-800 pb-2">
-        <span className="font-bold text-slate-200">MAX SUPER SPECIALITY HOSPITAL - GROUND FLOOR BLUEPRINT</span>
+    <div className="w-full bg-white dark:bg-slate-900/90 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden">
+      <div className="flex items-center justify-between mb-3 text-xs text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 pb-2">
+        <span className="font-bold text-slate-800 dark:text-slate-200">MAX SUPER SPECIALITY HOSPITAL - GROUND FLOOR BLUEPRINT</span>
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" /> Emergency Trauma</span>
           <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-teal-500 inline-block" /> Triage/Entrance</span>

@@ -5,11 +5,15 @@ import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { HealthcareIllustrationSVG } from '../components/ui/HealthcareIllustrationSVG';
 
+import { useTheme } from '../context/ThemeContext';
+import { Sun, Moon } from 'lucide-react';
+
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-teal-500 selection:text-white transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-teal-500 selection:text-white transition-colors duration-200">
       {/* Navigation Header */}
       <header className="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -22,16 +26,26 @@ export const LandingPage: React.FC = () => {
                 HEALINK
               </span>
               <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950 px-2 py-0.5 rounded-full border border-teal-200 dark:border-teal-800">
-                AI COMPANION
+                HEALTH PLATFORM
               </span>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-              <Lock className="w-3.5 h-3.5 text-teal-600" />
-              <span>256-Bit Encrypted</span>
+              <Lock className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+              <span>HIPAA Compliant Security</span>
             </div>
+
+            <button
+              onClick={toggleTheme}
+              title="Toggle Light / Dark Mode"
+              className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              aria-label="Toggle Theme"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+            </button>
+
             <Link to="/login">
               <Button variant="ghost" size="sm">Sign In</Button>
             </Link>

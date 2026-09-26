@@ -49,24 +49,24 @@ export const EmergencyCardView: React.FC<EmergencyCardViewProps> = ({ data }) =>
 
       {/* Emergency Contact */}
       {data.emergency_contact_name && (
-        <Card glass className="border-rose-500/40 bg-rose-950/20">
+        <Card glass={false} className="border-rose-300 dark:border-rose-500/40 bg-rose-50 dark:bg-rose-950/20">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-rose-600 text-white shadow-lg shadow-rose-950/50">
+              <div className="p-3 rounded-xl bg-rose-600 text-white shadow-md">
                 <Phone className="w-5 h-5 animate-pulse" />
               </div>
               <div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-rose-400 block">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-rose-700 dark:text-rose-400 block">
                   PRIMARY EMERGENCY CONTACT ({data.emergency_contact_relation || 'Kin'})
                 </span>
-                <h3 className="text-lg font-bold text-slate-100">{data.emergency_contact_name}</h3>
-                <p className="text-xs font-mono text-slate-300 mt-0.5">{data.emergency_contact_phone}</p>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{data.emergency_contact_name}</h3>
+                <p className="text-xs font-mono text-slate-600 dark:text-slate-300 mt-0.5">{data.emergency_contact_phone}</p>
               </div>
             </div>
 
             <a
               href={`tel:${data.emergency_contact_phone}`}
-              className="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-900/50 transition-transform active:scale-95 shrink-0"
+              className="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md transition-transform active:scale-95 shrink-0"
             >
               CALL NOW
             </a>
@@ -77,12 +77,12 @@ export const EmergencyCardView: React.FC<EmergencyCardViewProps> = ({ data }) =>
       {/* Severe Allergies */}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <AlertOctagon className="w-5 h-5 text-rose-400" />
-          <h3 className="text-base font-bold text-slate-100">Known Allergies ({data.allergies.length})</h3>
+          <AlertOctagon className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">Known Allergies ({data.allergies.length})</h3>
         </div>
 
         {data.allergies.length === 0 ? (
-          <p className="text-xs text-slate-400 italic p-3 rounded-xl bg-slate-900 border border-slate-800">
+          <p className="text-xs text-slate-500 dark:text-slate-400 italic p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
             No allergies specified by user for public emergency view.
           </p>
         ) : (
@@ -90,16 +90,16 @@ export const EmergencyCardView: React.FC<EmergencyCardViewProps> = ({ data }) =>
             {data.allergies.map((allergy) => (
               <div
                 key={allergy.id}
-                className="p-4 rounded-xl bg-rose-950/40 border border-rose-800/60 space-y-1.5"
+                className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 space-y-1.5"
               >
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-rose-200">{allergy.allergen}</h4>
+                  <h4 className="text-sm font-bold text-rose-900 dark:text-rose-200">{allergy.allergen}</h4>
                   <Badge variant={allergy.severity === 'Severe' ? 'severe' : 'moderate'}>
                     {allergy.severity}
                   </Badge>
                 </div>
-                <p className="text-xs text-rose-300/90 font-medium">Reaction: {allergy.reaction}</p>
-                {allergy.notes && <p className="text-[11px] text-slate-400 italic">{allergy.notes}</p>}
+                <p className="text-xs text-rose-800 dark:text-rose-300/90 font-medium">Reaction: {allergy.reaction}</p>
+                {allergy.notes && <p className="text-[11px] text-slate-500 dark:text-slate-400 italic">{allergy.notes}</p>}
               </div>
             ))}
           </div>
@@ -109,25 +109,25 @@ export const EmergencyCardView: React.FC<EmergencyCardViewProps> = ({ data }) =>
       {/* Active Medications */}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <Pill className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-base font-bold text-slate-100">Active Prescribed Medications ({data.active_medications.length})</h3>
+          <Pill className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">Active Prescribed Medications ({data.active_medications.length})</h3>
         </div>
 
         {data.active_medications.length === 0 ? (
-          <p className="text-xs text-slate-400 italic p-3 rounded-xl bg-slate-900 border border-slate-800">
+          <p className="text-xs text-slate-500 dark:text-slate-400 italic p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
             No active medications configured.
           </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {data.active_medications.map((med) => (
-              <div key={med.id} className="p-3.5 rounded-xl glass-card border border-indigo-950 space-y-1">
+              <div key={med.id} className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1 shadow-xs">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-slate-100">{med.name}</h4>
-                  <span className="text-xs font-semibold text-indigo-300 bg-indigo-950 px-2 py-0.5 rounded-md">
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">{med.name}</h4>
+                  <span className="text-xs font-semibold text-teal-800 dark:text-teal-300 bg-teal-50 dark:bg-teal-950 px-2 py-0.5 rounded-md border border-teal-200 dark:border-teal-800">
                     {med.dosage}
                   </span>
                 </div>
-                <p className="text-xs text-slate-400">{med.frequency}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">{med.frequency}</p>
                 {med.instructions && <p className="text-[11px] text-slate-500 italic">{med.instructions}</p>}
               </div>
             ))}
@@ -139,15 +139,15 @@ export const EmergencyCardView: React.FC<EmergencyCardViewProps> = ({ data }) =>
       {data.chronic_conditions.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <Heart className="w-5 h-5 text-teal-400" />
-            <h3 className="text-base font-bold text-slate-100">Chronic Conditions</h3>
+            <Heart className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">Chronic Conditions</h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {data.chronic_conditions.map((c) => (
-              <div key={c.id} className="p-3 rounded-xl glass-card text-xs space-y-1">
-                <h4 className="font-bold text-slate-200">{c.condition_name}</h4>
-                <p className="text-slate-400">Status: {c.status}</p>
-                {c.notes && <p className="text-slate-400 italic text-[11px]">{c.notes}</p>}
+              <div key={c.id} className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs space-y-1 shadow-xs">
+                <h4 className="font-bold text-slate-800 dark:text-slate-200">{c.condition_name}</h4>
+                <p className="text-slate-500 dark:text-slate-400">Status: {c.status}</p>
+                {c.notes && <p className="text-slate-500 dark:text-slate-400 italic text-[11px]">{c.notes}</p>}
               </div>
             ))}
           </div>
@@ -156,12 +156,12 @@ export const EmergencyCardView: React.FC<EmergencyCardViewProps> = ({ data }) =>
 
       {/* Insurance info if enabled */}
       {data.insurance_provider && (
-        <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs flex justify-between items-center">
+        <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs flex justify-between items-center shadow-xs">
           <div>
-            <span className="text-[10px] text-slate-500 uppercase font-bold block">INSURANCE COVERAGE</span>
-            <span className="font-semibold text-slate-200">{data.insurance_provider}</span>
+            <span className="text-[10px] text-slate-400 uppercase font-bold block">INSURANCE COVERAGE</span>
+            <span className="font-semibold text-slate-800 dark:text-slate-200">{data.insurance_provider}</span>
           </div>
-          <span className="font-mono text-teal-400">{data.insurance_policy_no}</span>
+          <span className="font-mono text-teal-600 dark:text-teal-400">{data.insurance_policy_no}</span>
         </div>
       )}
     </div>
